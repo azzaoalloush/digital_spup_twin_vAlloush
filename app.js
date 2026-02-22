@@ -117,7 +117,7 @@
 
       const card = document.createElement('div'); card.className = 'personal-card';
       const avatar = document.createElement('div'); avatar.className = 'avatar-lg';
-      const img = document.createElement('img'); img.src = 'public/assets/images/Antonio_Pic.png'; img.alt = 'avatar';
+      const img = document.createElement('img'); img.src = 'public/assets/images/ALLOUSH_PIC.png'; img.alt = 'avatar';
       avatar.appendChild(img);
 
       const main = document.createElement('div'); main.className = 'personal-main';
@@ -1561,26 +1561,26 @@
   function answerQuery(q){
     const s = q.toLowerCase();
     // personal
-    if (/(birth|born|birthplace|birth date|birthday)/.test(s)) return `I was born on ${resume.personal.birthDate} in ${resume.personal.birthplace}! 🎂`;
-    if (/(email|e-mail|contact|reach)/.test(s)) return `Sure! You can reach me at ${resume.personal.email}. I'm based in ${resume.personal.address}. 😊`;
-    if (/(gender)/.test(s)) return `I'm ${resume.personal.gender}!`;
-    if (/(citizen|nationality)/.test(s)) return `I'm ${resume.personal.citizenship}! 🇵🇭`;
-    if (/(religion|faith)/.test(s)) return `I'm ${resume.personal.religion}. ✝️`;
-    if (/(address|live|location|where)/.test(s)) return `I'm based in ${resume.personal.address}! It's home. 🏠`;
-    if (/(capstone|thesis|project)/.test(s)) return `Oh, my capstone project is "${resume.education.capstone}"! It's been a really interesting experience. 😄`;
+    if (/(birth|born|birthplace|birth date|birthday)/.test(s)) return `I was born on ${resume.personal.birthDate} in ${resume.personal.birthplace}.`;
+    if (/(email|e-mail|contact|reach)/.test(s)) return `You may reach me at ${resume.personal.email}. I am currently based in ${resume.personal.address}.`;
+    if (/(gender)/.test(s)) return `I am ${resume.personal.gender}.`;
+    if (/(citizen|nationality)/.test(s)) return `I am a ${resume.personal.citizenship} citizen.`;
+    if (/(religion|faith)/.test(s)) return `I practice ${resume.personal.religion}.`;
+    if (/(address|live|location|where)/.test(s)) return `I am currently based in ${resume.personal.address}.`;
+    if (/(capstone|thesis|project)/.test(s)) return `My capstone project is titled "${resume.education.capstone}." It has been a valuable experience that integrates practical development with real-world application.`;
     if (/(degree|studying|education|school)/.test(s)) {
-      return `I'm currently pursuing a ${resume.education.degree} at ${resume.education.school} (${resume.education.years}). My capstone project is "${resume.education.capstone}" — it's been great! Before this, I did Senior High at ${resume.education.shs.school} (${resume.education.shs.years}) and Junior High at ${resume.education.jhs.school} (${resume.education.jhs.years}).`;
+      return `I am currently pursuing a ${resume.education.degree} at ${resume.education.school} (${resume.education.years}). My capstone project is titled "${resume.education.capstone}." Prior to this, I completed Senior High School at ${resume.education.shs.school} (${resume.education.shs.years}) and Junior High School at ${resume.education.jhs.school} (${resume.education.jhs.years}).`;
     }
     if (/(certif|certificate|credential|training)/.test(s)) {
       if (/list|all/.test(s)) {
         const certList = resume.certifications.map(c => c.title).join('\n- ');
-        return `I've got ${resume.certifications.length} certifications! Here they are:\n- ${certList}`;
+        return `I have earned a total of ${resume.certifications.length} certifications. Below is the complete list:\n- ${certList}`;
       }
-      const recentCerts = resume.certifications.slice(0, 3).map(c => `${c.title} from ${c.org} (${c.date})`);
-      return `I've earned ${resume.certifications.length} certifications so far! Here are a few recent ones:\n- ${recentCerts.join('\n- ')}`;
+      const allCerts = resume.certifications.map(c => `${c.title} from ${c.org} (${c.date})`);
+      return `I have earned ${resume.certifications.length} certifications to date. Below is the complete list:\n- ${allCerts.join('\n- ')}`;
     }
     if (/(skill|technical|programming|framework|language|tech stack)/.test(s)) {
-      let skillsInfo = 'Here\'s what I work with! 💻\n\n';
+      let skillsInfo = 'Below is an overview of my technical competencies:\n\n';
       if (resume.skills) {
         Object.entries(resume.skills).forEach(([category, skillList]) => {
           if (Array.isArray(skillList) && skillList.length > 0) {
@@ -1594,30 +1594,329 @@
     if (/(affiliat|organization|member|group|role)/.test(s)) {
       if (resume.affiliations && resume.affiliations.length > 0) {
         const allAff = resume.affiliations.map(a => `${a.role} at ${a.organization} (${a.period})`).join('\n- ');
-        return `I'm part of a few organizations! Here are my roles:\n- ${allAff}`;
+        return `I am actively involved in several professional organizations. Below are my current roles:\n- ${allAff}`;
       }
-      return `Hmm, I don't have affiliation info to share on that one!`;
+      return `I do not have affiliation information available at this time.`;
     }
     // events by title
     for(const ev of resume.events){ 
       if (s.includes(ev.title.toLowerCase().slice(0,20))) {
-        return `Oh yeah, "${ev.title}"! That was at ${ev.venue} on ${ev.date}. ${ev.desc || ''}`;
+        return `"${ev.title}" was held at ${ev.venue} on ${ev.date}. ${ev.desc || ''}`;
       }
     }
     // events general
     if (/(event|seminar|workshop|conference|attend)/.test(s)) {
       if (/list|all/.test(s)) {
         const eventList = resume.events.map(e => `${e.title} at ${e.venue} (${e.date})`).join('\n- ');
-        return `I've been to ${resume.events.length} events! Here's the full list:\n- ${eventList}`;
+        return `I have attended a total of ${resume.events.length} events. Below is the complete list:\n- ${eventList}`;
       }
-      const recentEvents = resume.events.slice(0, 3).map(e => `${e.title} at ${e.venue} (${e.date})`);
-      return `I've attended ${resume.events.length} events so far! Here are a few recent ones:\n- ${recentEvents.join('\n- ')}`;
+      const allEvents = resume.events.map(e => `${e.title} at ${e.venue} (${e.date})`);
+      return `I have attended ${resume.events.length} events to date. Below is the complete list:\n- ${allEvents.join('\n- ')}`;
     }
     if (/(tell me about|who are you|introduce)/.test(s)) {
-      return `Hey there! 👋 I'm ${resume.personal.name}. I'm currently pursuing a ${resume.education.degree} at ${resume.education.school} (${resume.education.years}). My capstone is "${resume.education.capstone}". So far, I've earned ${resume.certifications.length} certifications and attended ${resume.events.length} events!`;
+      return `Good day. I am ${resume.personal.name}, currently pursuing a ${resume.education.degree} at ${resume.education.school} (${resume.education.years}). My capstone project is titled "${resume.education.capstone}". To date, I have earned ${resume.certifications.length} certifications and attended ${resume.events.length} professional events. I would be happy to provide further details on any aspect of my background.`;
     }
 
-    return `Hey! Feel free to ask me about my background, education, skills, certifications, events, or affiliations — I'd love to chat! 😊`;
+    return `Good day. I would be happy to assist you. You may ask me about my background, education, skills, certifications, events, or professional affiliations.`;
+  }
+
+  function generatePdfContent() {
+    const data = resumeData;
+    let html = `
+      <html>
+        <head>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.5; color: #333; background: white; padding: 0; width: 100%; }
+            .pdf-container { width: 100%; margin: 0 auto; }
+            h1 { font-size: 28px; font-weight: bold; margin: 0; color: #1a1a1a; }
+            h2 { font-size: 16px; font-weight: 700; margin-top: 20px; margin-bottom: 12px; color: #2563eb; border-bottom: 3px solid #2563eb; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; page-break-after: avoid; }
+            h3 { font-size: 13px; font-weight: 600; margin-top: 10px; margin-bottom: 6px; color: #1a1a1a; }
+            
+            .header { 
+              display: flex;
+              gap: 20px;
+              align-items: flex-start;
+              margin-bottom: 24px;
+              padding-bottom: 20px;
+              border-bottom: 2px solid #e0e0e0;
+              page-break-inside: avoid;
+            }
+            
+            .header-avatar {
+              flex-shrink: 0;
+              width: 100px;
+              height: 100px;
+              border-radius: 8px;
+              overflow: hidden;
+              border: 2px solid #2563eb;
+              background: #f5f5f5;
+            }
+            
+            .header-avatar img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+            
+            .header-content { flex: 1; }
+            .header-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+            .header-subtitle { font-size: 12px; color: #666; margin-bottom: 2px; }
+            .header-meta { font-size: 11px; color: #999; }
+            
+            .section { margin-bottom: 18px; page-break-inside: avoid; }
+            
+            .personal-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 12px;
+              margin-bottom: 0;
+            }
+            
+            .field { margin-bottom: 10px; page-break-inside: avoid; }
+            .field-label { font-weight: 600; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+            .field-value { font-size: 12px; color: #333; }
+            
+            .education-card {
+              border-left: 4px solid #2563eb;
+              padding: 10px 12px;
+              margin-bottom: 10px;
+              background: #f9f9f9;
+              page-break-inside: avoid;
+            }
+            
+            .cert-event-card {
+              border: 1px solid #ddd;
+              border-radius: 4px;
+              padding: 10px;
+              margin-bottom: 10px;
+              background: #fafafa;
+              page-break-inside: avoid;
+            }
+            
+            .skills-grid {
+              display: block;
+              margin-bottom: 0;
+            }
+            
+            .skill-category { 
+              margin-bottom: 14px; 
+              page-break-inside: avoid;
+              break-inside: avoid;
+            }
+            
+            .skill-category-title { 
+              background: #2563eb;
+              color: white;
+              padding: 6px 10px;
+              margin-bottom: 8px;
+              border-radius: 3px;
+              font-weight: 700;
+              font-size: 11px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+            
+            .skill-card {
+              border-left: 4px solid #2563eb;
+              padding: 7px 10px;
+              margin-bottom: 6px;
+              background: #f9f9f9;
+              page-break-inside: avoid;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            
+            .skill-card-name { 
+              font-size: 11px;
+              font-weight: 600;
+              color: #1a1a1a; 
+              flex: 1;
+            }
+            
+            .skill-card-level { 
+              font-size: 10px;
+              color: #ffffff !important;
+              text-transform: capitalize;
+              background: #1e40af !important;
+              padding: 4px 10px;
+              border-radius: 3px;
+              margin-left: 10px;
+              flex-shrink: 0;
+              font-weight: 700;
+              border: 1px solid #1e40af;
+              white-space: nowrap;
+              display: inline-block;
+            }
+            
+            .affiliation-card {
+              border: 1px solid #ddd;
+              border-radius: 4px;
+              padding: 10px;
+              margin-bottom: 10px;
+              background: #fafafa;
+              page-break-inside: avoid;
+            }
+            
+            .footer { 
+              text-align: center;
+              margin-top: 28px;
+              margin-bottom: 0;
+              padding: 14px 8px;
+              border-top: 1px solid #ddd;
+              font-size: 10px;
+              color: #999;
+              width: 100%;
+              box-sizing: border-box;
+              line-height: 1.5;
+              word-break: break-word;
+              overflow-wrap: break-word;
+            }
+            
+            @page { 
+              margin: 12mm 10mm; 
+              size: A4;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="pdf-container">
+          <!-- Header with Avatar -->
+          <div class="header">
+            <div class="header-avatar">
+              <img src="public/assets/images/ALLOUSH_PIC.png" alt="Profile Picture" />
+            </div>
+            <div class="header-content">
+              <h1 class="header-title">${data.personal.name}</h1>
+              <div class="header-subtitle">${data.education.degree}</div>
+              <div class="header-meta">${data.education.school} (${data.education.years})</div>
+            </div>
+          </div>
+
+          <!-- Personal Data Section -->
+          <div class="section">
+            <h2>Personal Information</h2>
+            <div class="personal-grid">
+              <div class="field"><div class="field-label">Birth Date</div><div class="field-value">${data.personal.birthDate}</div></div>
+              <div class="field"><div class="field-label">Birthplace</div><div class="field-value">${data.personal.birthplace}</div></div>
+              <div class="field"><div class="field-label">Gender</div><div class="field-value">${data.personal.gender}</div></div>
+              <div class="field"><div class="field-label">Citizenship</div><div class="field-value">${data.personal.citizenship}</div></div>
+              <div class="field"><div class="field-label">Religion</div><div class="field-value">${data.personal.religion}</div></div>
+              <div class="field"><div class="field-label">Location</div><div class="field-value">${data.personal.address}</div></div>
+              <div class="field" style="grid-column: 1 / -1;"><div class="field-label">Email</div><div class="field-value">${data.personal.email}</div></div>
+            </div>
+          </div>
+
+          <!-- Education Section -->
+          <div class="section">
+            <h2>Educational Background</h2>
+    `;
+
+    // Add education entries
+    const eduLevels = [
+      { level: 'degree', title: 'Bachelor\'s Degree', years: data.education.years, school: data.education.school, capstone: data.education.capstone },
+      { level: 'shs', title: 'Senior High School', years: data.education.shs.years, school: data.education.shs.school },
+      { level: 'jhs', title: 'Junior High School', years: data.education.jhs.years, school: data.education.jhs.school }
+    ];
+
+    eduLevels.forEach(edu => {
+      html += `<div class="education-card">
+        <h3>${edu.title} — ${edu.years}</h3>
+        <div class="field"><div class="field-label">Institution</div><div class="field-value">${edu.school}</div></div>
+        ${edu.capstone ? `<div class="field"><div class="field-label">Capstone Project</div><div class="field-value">${edu.capstone}</div></div>` : ''}
+      </div>`;
+    });
+    html += `</div>`;
+
+    // Skills Section (moved here - after education)
+    html += `<div class="section"><h2>Technical & Professional Skills</h2><div class="skills-grid">`;
+    if (data.skills) {
+      Object.entries(data.skills).forEach(([category, skillList]) => {
+        if (Array.isArray(skillList) && skillList.length > 0) {
+          html += `<div class="skill-category">
+            <div class="skill-category-title">${category}</div>`;
+          
+          skillList.forEach(skill => {
+            const skillName = skill.skill || skill.lang || skill.name || skill.system || skill.area || '';
+            
+            // Extract proficiency level (Beginner, Intermediate, Advanced)
+            let proficiencyLevel = '';
+            const profField = skill.proficiency || skill.level || '';
+            if (profField) {
+              const match = profField.match(/^(Beginner|Intermediate|Advanced)/i);
+              proficiencyLevel = match ? match[1] : '';
+            }
+            
+            html += `<div class="skill-card">
+              <div class="skill-card-name">${skillName}</div>
+              ${proficiencyLevel ? `<div class="skill-card-level">${proficiencyLevel}</div>` : ''}
+            </div>`;
+          });
+          
+          html += `</div>`;
+        }
+      });
+    }
+    html += `</div></div>`;
+
+    // Certifications Section
+    html += `<div class="section"><h2>Certifications</h2>`;
+    data.certifications.forEach(cert => {
+      html += `<div class="cert-event-card">
+        <h3>${cert.title}</h3>
+        <div class="field"><div class="field-label">Organization</div><div class="field-value">${cert.org}</div></div>
+        <div class="field"><div class="field-label">Date</div><div class="field-value">${cert.date}</div></div>
+        ${cert.desc ? `<div class="field"><div class="field-value" style="font-size: 11px; color: #666;">${cert.desc}</div></div>` : ''}
+      </div>`;
+    });
+    html += `</div>`;
+
+    // Events/Seminars Section
+    html += `<div class="section"><h2>Seminars, Workshops & Conferences</h2>`;
+    data.events.forEach(event => {
+      html += `<div class="cert-event-card">
+        <h3>${event.title}</h3>
+        <div class="field"><div class="field-label">Venue</div><div class="field-value">${event.venue}</div></div>
+        <div class="field"><div class="field-label">Date</div><div class="field-value">${event.date}</div></div>
+        ${event.desc ? `<div class="field"><div class="field-value" style="font-size: 11px; color: #666;">${event.desc}</div></div>` : ''}
+      </div>`;
+    });
+    html += `</div>`;
+
+    // Affiliations Section
+    html += `<div class="section"><h2>Professional Affiliations</h2>`;
+    data.affiliations.forEach(aff => {
+      html += `<div class="affiliation-card">
+        <h3>${aff.role}</h3>
+        <div class="field"><div class="field-label">Organization</div><div class="field-value">${aff.organization}</div></div>
+        <div class="field"><div class="field-label">Period</div><div class="field-value">${aff.period}</div></div>
+        ${aff.desc ? `<div class="field"><div class="field-value" style="font-size: 11px; color: #666;">${aff.desc}</div></div>` : ''}
+      </div>`;
+    });
+    html += `</div>`;
+
+    html += `<div class="footer">Generated on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} • Azza M. Alloush • Digital Twin Resume</div>
+          </div>
+          </body>
+        </html>
+    `;
+    return html;
+  }
+
+  function exportResumeToPdf() {
+    const element = document.createElement('div');
+    element.innerHTML = generatePdfContent();
+    
+    const opt = {
+      margin: 10,
+      filename: 'Resume_Azza_M_Alloush.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    };
+
+    html2pdf().set(opt).from(element).save();
   }
 
   async function queryServer(message){
@@ -1724,5 +2023,13 @@
   window.addEventListener('resize', ensurePanelVisible);
   // ensure panel visible on open
   chatToggle.addEventListener('click', () => { setTimeout(ensurePanelVisible, 80); });
+
+  // Add export PDF button event listener
+  const exportPdfBtn = document.getElementById('exportPdfBtn');
+  if (exportPdfBtn) {
+    exportPdfBtn.addEventListener('click', () => {
+      exportResumeToPdf();
+    });
+  }
 
 })();
